@@ -1,47 +1,60 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../l10n/app_strings.dart';
 import 'announcement_type.dart';
 
-class AnnouncementModel {
-  AnnouncementModel({
+class Announcement {
+  const Announcement({
     required this.id,
     required this.type,
-    required this.body,
+    required this.bodyJson,
     required this.createdAt,
-    this.customTag,
+    this.customLabel,
     this.authorUid,
   });
 
   final String id;
   final AnnouncementType type;
-  final String body;
+  final String bodyJson;
   final DateTime createdAt;
-  final String? customTag;
+  final String? customLabel;
   final String? authorUid;
 
-  static AnnouncementModel fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
+  String typeLabel(AppStrings s) => type.label(s, customLabel: customLabel);
+
+  factory Announcement.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
     final d = doc.data() ?? {};
-    return AnnouncementModel(
+    final ts = d['createdAt'];
+    DateTime created = DateTime.now();
+    if (ts is Timestamp) created = ts.toDate();
+    final t =
+        announcementTypeFromString(d['type'] as String?) ??
+        AnnouncementType.publicNotice;
+    return Announcement(
       id: doc.id,
-      type: AnnouncementType.fromCode(d['type'] as String?),
-      body: (d['body'] as String?) ?? '',
-      createdAt: (d['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
-      customTag: d['customTag'] as String?,
+      type: t,
+      bodyJson: (d['body'] as String?) ?? '',
+      createdAt: created,
+      customLabel: d['customLabel'] as String?,
       authorUid: d['authorUid'] as String?,
     );
   }
 
-  Map<String, dynamic> toMap(String uid) => {
-        'type': type.code,
-        'body': body,
-        'customTag': type == AnnouncementType.customTag ? customTag : null,
-        'authorUid': uid,
-        'createdAt': FieldValue.serverTimestamp(),
-      };
-}
+  Map<String, dynamic> toCreateMap({
+    required String bodyJson,
+    required String? authorUid,
+  }) => {
+    'type': type.storageKey,
+    'body': bodyJson,
+    'createdAt': FieldValue.serverTimestamp(),
+    if (customLabel != null && customLabel!.trim().isNotEmpty)
+      'customLabel': customLabel!.trim(),
+    'authorUid': ?authorUid,
+  };
 
-int compareAnnouncementsBySeverity(AnnouncementModel a, AnnouncementModel b) {
-  final byType = a.type.severityRank.compareTo(b.type.severityRank);
-  if (byType != 0) return byType;
-  return b.createdAt.compareTo(a.createdAt);
+  static int compareBySeverityThenNewest(Announcement a, Announcement b) {
+    final bySeverity = a.type.severityRank.compareTo(b.type.severityRank);
+    if (bySeverity != 0) return bySeverity;
+    return b.createdAt.compareTo(a.createdAt);
+  }
 }
