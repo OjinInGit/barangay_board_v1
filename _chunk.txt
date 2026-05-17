@@ -1,0 +1,564 @@
+class AppStrings {
+  static AppStrings of(BuildContext context) {
+    final scope = AppStringsScope.of(context);
+    return scope.strings;
+  }
+
+  LocaleTag get localeTag;
+
+  String get appName;
+  String get appTagline;
+  String get login;
+  String get register;
+  String get username;
+  String get password;
+  String get email;
+  String get firstName;
+  String get lastName;
+  String get middleInitial;
+  String get suffix;
+  String get retypePassword;
+  String get noAccount;
+  String get haveAccount;
+  String get fieldRequired;
+  String get emptyPassword;
+  String get invalidCredentials;
+  String get genericError;
+  String get accountDeactivated;
+  String get residents;
+  String get makeAnnouncement;
+  String get announcements;
+  String get settings;
+  String get language;
+  String get logOut;
+  String get exit;
+  String get confirmLogOut;
+  String get confirmExit;
+  String get yes;
+  String get no;
+  String get cancel;
+  String get save;
+  String get edit;
+  String get delete;
+  String get noAnnouncements;
+  String get announcementType;
+  String get post;
+  String get chooseLanguage;
+  String get continueLabel;
+  String get notificationRationaleTitle;
+  String get notificationRationaleBody;
+  String get notNow;
+  String get enableNotifications;
+  String get adminDashboardSubtitle;
+  String get residentBulletinSubtitle;
+  String get deleteAnnouncementTitle;
+  String get deleteAnnouncementBody;
+  String get announcementDeleted;
+  String get customTagHint;
+  String get customTagRequired;
+
+  String get typeUrgentNotice;
+  String get typeHealthAdvisory;
+  String get typeOfficialAdvisory;
+  String get typePublicNotice;
+  String get typeGeneralAssembly;
+  String get typeWasteManagement;
+  String get typeEvent;
+  String get typeCustomTag;
+
+  String get errInvalidEmail;
+  String get errUserDisabled;
+  String get errUserNotFound;
+  String get errWrongPassword;
+  String get errInvalidCredentials;
+  String get errEmailInUse;
+  String get errWeakPasswordAuth;
+  String get errOperationNotAllowed;
+  String get errTooManyRequests;
+  String get errNetwork;
+  String errAuthWithDetail(String code);
+  String get errPermissionDenied;
+  String get errUsernameTaken;
+  String get errPasswordMismatch;
+  String passwordProblemMessage(String code);
+}
+
+class AppStringsEn extends AppStrings {
+  @override
+  LocaleTag get localeTag => LocaleTag.en;
+
+  @override
+  String get appName => 'BarangayBoard';
+
+  @override
+  String get appTagline => 'E-Bulletin App for Brgy. Sagkahan';
+
+  @override
+  String get login => 'Log in';
+
+  @override
+  String get register => 'Register';
+
+  @override
+  String get username => 'Username';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get email => 'E-mail';
+
+  @override
+  String get firstName => 'First name';
+
+  @override
+  String get lastName => 'Last name';
+
+  @override
+  String get middleInitial => 'Middle initial';
+
+  @override
+  String get suffix => 'Suffix';
+
+  @override
+  String get retypePassword => 'Retype password';
+
+  @override
+  String get noAccount => "Don't have an account? Register";
+
+  @override
+  String get haveAccount => 'Already have an account? Log in';
+
+  @override
+  String get fieldRequired => 'This field is required.';
+
+  @override
+  String get emptyPassword => 'Enter your password.';
+
+  @override
+  String get invalidCredentials => 'No account matches that username.';
+
+  @override
+  String get genericError => 'Something went wrong. Please try again.';
+
+  @override
+  String get accountDeactivated => 'This account has been deactivated.';
+
+  @override
+  String get residents => 'Residents';
+
+  @override
+  String get makeAnnouncement => 'Make an announcement';
+
+  @override
+  String get announcements => 'Announcements';
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get logOut => 'Log out';
+
+  @override
+  String get exit => 'Exit';
+
+  @override
+  String get confirmLogOut => 'Log out of BarangayBoard?';
+
+  @override
+  String get confirmExit => 'Exit the app? You will stay signed in.';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get noAnnouncements => 'No announcements yet.';
+
+  @override
+  String get announcementType => 'Type';
+
+  @override
+  String get post => 'Post';
+
+  @override
+  String get chooseLanguage => 'Choose your language';
+
+  @override
+  String get continueLabel => 'Continue';
+
+  @override
+  String get notificationRationaleTitle => 'Stay informed';
+
+  @override
+  String get notificationRationaleBody =>
+      'Enable notifications so you do not miss urgent barangay advisories. You can change this anytime in system settings.';
+
+  @override
+  String get notNow => 'Not now';
+
+  @override
+  String get enableNotifications => 'Enable notifications';
+
+  @override
+  String get adminDashboardSubtitle => 'administrator dashboard';
+
+  @override
+  String get residentBulletinSubtitle => 'resident bulletin';
+
+  @override
+  String get deleteAnnouncementTitle => 'Delete announcement?';
+
+  @override
+  String get deleteAnnouncementBody => 'This cannot be undone.';
+
+  @override
+  String get announcementDeleted => 'Announcement deleted.';
+
+  @override
+  String get customTagHint => 'Custom tag label';
+
+  @override
+  String get customTagRequired => 'Enter a custom tag label.';
+
+  @override
+  String get typeUrgentNotice => 'Urgent Notice';
+
+  @override
+  String get typeHealthAdvisory => 'Health Advisory';
+
+  @override
+  String get typeOfficialAdvisory => 'Official Advisory';
+
+  @override
+  String get typePublicNotice => 'Public Notice';
+
+  @override
+  String get typeGeneralAssembly => 'General Assembly';
+
+  @override
+  String get typeWasteManagement => 'Waste Management';
+
+  @override
+  String get typeEvent => 'Event';
+
+  @override
+  String get typeCustomTag => 'Custom Tag';
+
+  @override
+  String get errInvalidEmail => 'The e-mail address is not valid.';
+
+  @override
+  String get errUserDisabled => 'This account has been disabled.';
+
+  @override
+  String get errUserNotFound => 'No account matches these credentials.';
+
+  @override
+  String get errWrongPassword => 'Incorrect password.';
+
+  @override
+  String get errInvalidCredentials => 'Invalid username or password.';
+
+  @override
+  String get errEmailInUse => 'That e-mail is already registered.';
+
+  @override
+  String get errWeakPasswordAuth => 'Password is too weak for Firebase Auth.';
+
+  @override
+  String get errOperationNotAllowed => 'Sign-in method is not enabled.';
+
+  @override
+  String get errTooManyRequests => 'Too many attempts. Try again later.';
+
+  @override
+  String get errNetwork => 'Network error. Check your connection and try again.';
+
+  @override
+  String errAuthWithDetail(String code) => 'Authentication error ($code).';
+
+  @override
+  String get errPermissionDenied =>
+      'Permission denied. Check Firestore rules and try again.';
+
+  @override
+  String get errUsernameTaken => 'That username is already taken.';
+
+  @override
+  String get errPasswordMismatch => 'Passwords do not match.';
+
+  @override
+  String passwordProblemMessage(String code) => switch (code) {
+        'too_short' => 'Password must be at least 8 characters.',
+        'need_upper' => 'Include an uppercase letter.',
+        'need_lower' => 'Include a lowercase letter.',
+        'need_digit' => 'Include a number.',
+        'need_special' => 'Include a symbol.',
+        _ => 'Password does not meet requirements.',
+      };
+}
+
+class AppStringsFil extends AppStringsEn {
+  @override
+  LocaleTag get localeTag => LocaleTag.fil;
+
+  @override
+  String get appTagline => 'E-Bulletin App para sa Brgy. Sagkahan';
+
+  @override
+  String get login => 'Mag-log in';
+
+  @override
+  String get register => 'Magrehistro';
+
+  @override
+  String get noAccount => 'Walang account? Magrehistro';
+
+  @override
+  String get haveAccount => 'May account na? Mag-log in';
+
+  @override
+  String get invalidCredentials => 'Walang account na tumutugma sa username.';
+
+  @override
+  String get chooseLanguage => 'Piliin ang wika';
+
+  @override
+  String get adminDashboardSubtitle => 'dashboard ng administrator';
+
+  @override
+  String get residentBulletinSubtitle => 'bulletin ng residente';
+
+  @override
+  String get typeUrgentNotice => 'Urgent na Paalala';
+
+  @override
+  String get typeHealthAdvisory => 'Health Advisory';
+
+  @override
+  String get typeOfficialAdvisory => 'Opisyal na Abiso';
+
+  @override
+  String get typePublicNotice => 'Pampublikong Paalala';
+
+  @override
+  String get typeGeneralAssembly => 'Pangkalahatang Asembliya';
+
+  @override
+  String get typeWasteManagement => 'Waste Management';
+
+  @override
+  String get typeEvent => 'Kaganapan';
+
+  @override
+  String get typeCustomTag => 'Custom na Tag';
+}
+
+class AppStringsScope extends InheritedWidget {
+  const AppStringsScope({
+    super.key,
+    required this.strings,
+    required super.child,
+  });
+
+  final AppStrings strings;
+
+  static AppStringsScope of(BuildContext context) {
+    final scope = context.dependOnInheritedWidgetOfExactType<AppStringsScope>();
+    assert(scope != null, 'AppStringsScope not found');
+    return scope!;
+  }
+
+  @override
+  bool updateShouldNotify(AppStringsScope oldWidget) =>
+      oldWidget.strings.localeTag != strings.localeTag;
+}
+
+AppStrings stringsFor(LocaleTag tag) =>
+    tag == LocaleTag.fil ? AppStringsFil() : AppStringsEn();
+ (///!!)("%'&%" !#""$"%!)"".(+)@ %%% (&0!2=?96HHI'9/%%";F!!9)7*<*}"<B>@A=2?26:288#,DCI8GDOIJRL$AD?@B87-/5	+,D$(9:O2EB6699@8'/04Q888(=/package:barangay_board_v1/l10n/app_strings.dart ]file:///C:/Users/Ojin/Desktop/BarangayBoard/barangay_board_v1/barangay_board_v1/lib/main.dartimport 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'core/app_constants.dart';
+import 'core/app_theme.dart';
+import 'data/repos.dart';
+import 'firebase_options.dart';
+import 'l10n/app_strings.dart';
+import 'models/user_profile.dart';
+import 'screens/home_router.dart';
+import 'screens/language_first_run_screen.dart';
+import 'screens/login_screen.dart';
+import 'screens/splash_screen.dart';
+import 'services/messaging_service.dart';
+import 'services/preferences_service.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  final prefs = await SharedPreferences.getInstance();
+  final prefService = PreferencesService(prefs);
+  final messaging = MessagingService();
+  await messaging.init();
+  runApp(BoardApp(prefService: prefService, messaging: messaging));
+}
+
+class BoardApp extends StatefulWidget {
+  const BoardApp({
+    super.key,
+    required this.prefService,
+    required this.messaging,
+  });
+
+  final PreferencesService prefService;
+  final MessagingService messaging;
+
+  @override
+  State<BoardApp> createState() => _BoardAppState();
+}
+
+class _BoardAppState extends State<BoardApp> {
+  late AppRepos _repos;
+  late AppStrings _strings;
+
+  @override
+  void initState() {
+    super.initState();
+    _repos = AppRepos.fromFirebase(widget.prefService);
+    _strings = stringsFor(widget.prefService.localeTag);
+  }
+
+  void _reloadLocale() {
+    setState(() => _strings = stringsFor(widget.prefService.localeTag));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AppStringsScope(
+      strings: _strings,
+      child: MaterialApp(
+        title: kAppBrand,
+        debugShowCheckedModeBanner: false,
+        themeMode: ThemeMode.system,
+        theme: AppTheme.light(),
+        darkTheme: AppTheme.dark(),
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en'),
+          Locale('fil'),
+        ],
+        home: _Bootstrap(
+          repos: _repos,
+          messaging: widget.messaging,
+          onLocaleChanged: _reloadLocale,
+        ),
+      ),
+    );
+  }
+}
+
+class _Bootstrap extends StatefulWidget {
+  const _Bootstrap({
+    required this.repos,
+    required this.messaging,
+    required this.onLocaleChanged,
+  });
+
+  final AppRepos repos;
+  final MessagingService messaging;
+  final VoidCallback onLocaleChanged;
+
+  @override
+  State<_Bootstrap> createState() => _BootstrapState();
+}
+
+class _BootstrapState extends State<_Bootstrap> {
+  bool _splashDone = false;
+
+  void _afterSplash() => setState(() => _splashDone = true);
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_splashDone) {
+      return SplashScreen(onFinished: _afterSplash);
+    }
+    if (!widget.repos.prefs.firstRunComplete) {
+      return LanguageFirstRunScreen(
+        repos: widget.repos,
+        messaging: widget.messaging,
+        onDone: () {
+          widget.onLocaleChanged();
+          setState(() {});
+        },
+      );
+    }
+    final user = widget.repos.auth.currentUser;
+    if (user == null) {
+      return LoginScreen(
+        repos: widget.repos,
+        messaging: widget.messaging,
+      );
+    }
+    return FutureBuilder<UserProfile?>(
+      future: widget.repos.users.profileForUid(user.uid),
+      builder: (context, snap) {
+        if (snap.connectionState != ConnectionState.done) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+        final profile = snap.data;
+        if (profile == null || !profile.active) {
+          return LoginScreen(
+            repos: widget.repos,
+            messaging: widget.messaging,
+          );
+        }
+        widget.messaging.onLogin(profile.role);
+        return HomeRouter(
+          repos: widget.repos,
+          messaging: widget.messaging,
+          profile: profile,
+        );
+      },
+    );
+  }
+}
+ 3=(C="  ##1$%*,-QM71(D(($5/89I'+%!$(0/1"'*	*#$&82='50%%$	0%	(:!<!>
+#2!)
+0'	#package:barangay_board_v1/main.dart
+ y#(9(-  ((qlfile:///C:/Users/Ojin/Desktop/BarangayBoard/barangay_board_v1/barangay_board_v1/lib/models/announcement.dartimport 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../l10n/app_strings.dart';
+import 'announcement_type.dart';
+
+class Announcement {
+  const Announcement({
+    required this.id,
+    required this.type,
+    requi

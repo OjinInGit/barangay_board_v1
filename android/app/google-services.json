@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "169012284832",
+    "project_id": "barangayboard-v1",
+    "storage_bucket": "barangayboard-v1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:169012284832:android:7469a26811dd33038a68c5",
+        "android_client_info": {
+          "package_name": "com.example.barangay_board_v1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9MvZnouLITN0IHFOboklgHcdfTETYrSc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

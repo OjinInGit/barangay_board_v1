@@ -1,0 +1,42 @@
+name: barangay_board_v1
+description: BarangayBoard — E-Bulletin App for Brgy. Sagkahan
+publish_to: 'none'
+version: 1.5.3+1
+
+environment:
+  sdk: ^3.10.7
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  firebase_core: ^3.13.0
+  firebase_auth: ^5.5.3
+  cloud_firestore: ^5.6.7
+  firebase_messaging: ^15.2.5
+  flutter_local_notifications: ^19.0.0
+  shared_preferences: ^2.5.3
+  google_fonts: ^6.2.1
+  intl: ^0.20.2
+  flutter_quill: ^11.2.0
+  package_info_plus: ^8.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.3
+  image: ^4.5.4
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: assets/branding/app_icon.png
+  adaptive_icon_background: "#1565C0"
+  adaptive_icon_foreground: assets/branding/app_icon.png
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/branding/
