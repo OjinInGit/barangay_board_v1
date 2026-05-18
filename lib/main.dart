@@ -61,7 +61,7 @@ class _BarangayBoardAppState extends State<BarangayBoardApp> {
       child: ListenableBuilder(
         listenable: _appLocale,
         builder: (context, _) {
-          final s = AppStrings(_appLocale.code);
+          final s = AppStrings.fromCode(_appLocale.code);
           return MaterialApp(
             title: s.appName,
             theme: AppTheme.light(),
@@ -157,7 +157,7 @@ class _RootGateState extends State<_RootGate> {
   }
 
   Future<void> _notificationPrompt() async {
-    final s = AppStrings(widget.appLocale.code);
+    final s = AppStrings.fromCode(widget.appLocale.code);
     final allow = await showDialog<bool>(
       context: context,
       barrierDismissible: false,

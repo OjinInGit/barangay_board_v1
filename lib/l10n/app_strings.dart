@@ -9,17 +9,29 @@ extension AppLanguageCode on AppLanguage {
 class AppStrings {
   AppStrings(this.lang);
 
+  AppStrings.fromCode(String code) : lang = languageFromCode(code);
+
   final AppLanguage lang;
 
   bool get isEnglish => lang == AppLanguage.english;
 
+  static AppLanguage languageFromCode(String code) {
+    final c = code.toLowerCase();
+    if (c == 'fil' || c == 'tl') return AppLanguage.filipino;
+    return AppLanguage.english;
+  }
+
   String t(String en, String fil) => isEnglish ? en : fil;
 
-  String get appName => t('Barangay E-Bulletin', 'E-Bulletin ng Barangay');
-  String get introTagline => t(
-    'Stay informed with official announcements.',
-    'Manatiling may alam sa opisyal na anunsyo.',
-  );
+  String get appName => t('BarangayBoard', 'BarangayBoard');
+  String get appTagline =>
+      t('E-Bulletin App for Brgy. Sagkahan', 'E-Bulletin App para sa Brgy. Sagkahan');
+  String get appVersionLabel => 'v 1.5.6';
+  String get introTagline => appTagline;
+  String get adminDashboardSubtitle =>
+      t('Administrator dashboard', 'Dashboard ng tagapangasiwa');
+  String get residentBulletinSubtitle =>
+      t('Resident bulletin', 'Bulletin ng residente');
 
   String get chooseLanguage => t('Choose your language', 'Piliin ang wika');
   String get english => t('English', 'Ingles');
@@ -46,7 +58,11 @@ class AppStrings {
   String get settings => t('Settings', 'Mga Setting');
   String get language => t('Language', 'Wika');
   String get logOut => t('Log out', 'Mag-log out');
+  String get logout => logOut;
   String get exitApp => t('Exit', 'Lumabas');
+
+  String loggedInAs(String username) =>
+      t('Logged in as $username', 'Naka-log in bilang $username');
 
   String get residents => t('Residents', 'Mga Residente');
   String get makeAnnouncement => t('Make an Announcement', 'Gumawa ng Anunsyo');
@@ -58,6 +74,7 @@ class AppStrings {
   String get announcementType => t('Announcement type', 'Uri ng anunsyo');
   String get announcementBody => t('Announcement text', 'Teksto ng anunsyo');
   String get post => t('Post', 'I-post');
+  String get publish => post;
   String get save => t('Save', 'I-save');
   String get delete => t('Delete', 'Tanggalin');
   String get edit => t('Edit', 'I-edit');
@@ -70,6 +87,23 @@ class AppStrings {
   String get healthAdvisory => t('Health Advisory', 'Health Advisory');
   String get other => t('Other', 'Iba pa');
 
+  String get typeUrgentNotice => t('Urgent Notice', 'Apurahang paalala');
+  String get typeHealthAdvisory => t('Health Advisory', 'Payo sa kalusugan');
+  String get typeOfficialAdvisory => t('Official Advisory', 'Opisyal na payo');
+  String get typePublicNotice => t('Public Notice', 'Pampublikong abiso');
+  String get typeGeneralAssembly =>
+      t('General Assembly', 'Pangkalahatang pagpupulong');
+  String get typeWasteManagement =>
+      t('Waste Management', 'Pamamahala ng basura');
+  String get typeEvent => event;
+  String get typeCustomTag => t('Custom Tag', 'Pasadyang tag');
+  String get customTagHint =>
+      t('Enter custom tag label', 'Ilagay ang pasadyang tag');
+  String get customTagRequired => t(
+        'Custom tag label is required.',
+        'Kailangan ang pasadyang tag.',
+      );
+
   String get notificationRationaleTitle =>
       t('Enable notifications', 'Paganahin ang mga notification');
   String get notificationRationaleBody => t(
@@ -77,13 +111,32 @@ class AppStrings {
     'Kapag naka-on ang notifications, mas mabilis kang maabot ng barangay kapag may bagong anunsyo. Maaari mo itong baguhin anumang oras sa settings ng iyong device para sa app na ito.',
   );
   String get askLater => t('Not now', 'Hindi muna');
+  String get notNow => askLater;
   String get allowNotifications =>
       t('Allow notifications', 'Payagan ang notifications');
+  String get notificationPromptTitle => notificationRationaleTitle;
+  String get notificationPromptBody => notificationRationaleBody;
+
+  String get emptyPassword =>
+      t('Please enter your password.', 'Ilagay ang password.');
+  String get accountDeactivated => t(
+        'This account has been deactivated.',
+        'Na-deactivate ang account.',
+      );
 
   String get fieldRequired =>
       t('This field is required.', 'Kinakailangan ang patlang na ito.');
   String get passwordsMismatch =>
       t('Passwords do not match.', 'Hindi tugma ang mga password.');
+  String get errPasswordMismatch => passwordsMismatch;
+  String get registrationSuccess => t(
+        'Registration successful. Please log in.',
+        'Matagumpay ang rehistro. Mag-login na.',
+      );
+  String get errNameTaken => duplicateFullName;
+  String get errUsernameTaken => usernameTaken;
+  String get errRegistrationServer => errFirestorePermission;
+  String get invalidMiddleInitial => errMiddleInitialOneLetter;
   String get invalidCredentials =>
       t('Invalid username or password.', 'Mali ang username o password.');
   String get usernameTaken =>
@@ -112,11 +165,13 @@ class AppStrings {
     'You will need to sign in again to use the app.',
     'Kailangan mong mag-sign in muli para magamit ang app.',
   );
+  String get logoutConfirm => confirmLogOutBody;
   String get confirmExitTitle => t('Exit app?', 'Lumabas sa app?');
   String get confirmExitBody => t(
     'The app will close. You can open it again from your home screen.',
     'Magsasara ang app. Maaari mo itong buksan muli mula sa home screen.',
   );
+  String get exitConfirm => confirmExitBody;
   String get confirmYes => t('Yes', 'Oo');
   String get confirmNo => t('No', 'Hindi');
 
@@ -193,17 +248,27 @@ class AppStrings {
     'Could not remove resident. Check your connection and Firestore rules.',
     'Hindi naalis ang residente. Suriin ang koneksyon at rules.',
   );
+  String get residentRemovedSuccess => t(
+        'Resident removed successfully.',
+        'Matagumpay na natanggal ang residente.',
+      );
+  String get residentRemoveFailed => errRemoveResidentFailed;
 
   String messageForPasswordPolicyCode(String code) {
     switch (code) {
+      case 'too_short':
       case 'password_too_short':
         return errPasswordTooShort;
+      case 'need_upper':
       case 'password_need_upper':
         return errPasswordNeedUpper;
+      case 'need_lower':
       case 'password_need_lower':
         return errPasswordNeedLower;
+      case 'need_digit':
       case 'password_need_digit':
         return errPasswordNeedDigit;
+      case 'need_special':
       case 'password_need_special':
         return errPasswordNeedSpecial;
       default:

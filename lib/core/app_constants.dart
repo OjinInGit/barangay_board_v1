@@ -1,7 +1,7 @@
 class AppConstants {
   static const appName = 'BarangayBoard';
   static const appTagline = 'E-Bulletin App for Brgy. Sagkahan';
-  static const appVersionLabel = 'v 1.5.3';
+  static const appVersionLabel = 'v 1.5.6';
 
   static const fcmTopicResidents = 'all_residents';
   static const fcmChannelId = 'barangay_announcements';
