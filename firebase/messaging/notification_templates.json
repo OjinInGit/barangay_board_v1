@@ -1,0 +1,78 @@
+{
+  "project_id": "barangayboard-v1",
+  "fcm_topic": "all_residents",
+  "android_channel_id": "barangay_announcements",
+  "instructions": "Use Firebase Console → Engage → Messaging → Create campaign → Firebase Notification messages. Target: Topic → all_residents. Copy title/body from a template below after publishing an announcement in the app.",
+  "templates": [
+    {
+      "announcement_type": "urgent_notice",
+      "notification_title": "BarangayBoard: Urgent Notice",
+      "notification_body": "An urgent notice was posted for Brgy. Sagkahan. Open the app to read.",
+      "optional_data": {
+        "type": "urgent_notice"
+      }
+    },
+    {
+      "announcement_type": "health_advisory",
+      "notification_title": "BarangayBoard: Health Advisory",
+      "notification_body": "A new health advisory is available. Open the app to read.",
+      "optional_data": {
+        "type": "health_advisory"
+      }
+    },
+    {
+      "announcement_type": "official_advisory",
+      "notification_title": "BarangayBoard: Official Advisory",
+      "notification_body": "A new official advisory was published. Open the app to read.",
+      "optional_data": {
+        "type": "official_advisory"
+      }
+    },
+    {
+      "announcement_type": "public_notice",
+      "notification_title": "BarangayBoard: Public Notice",
+      "notification_body": "A new public notice was posted. Open the app to read.",
+      "optional_data": {
+        "type": "public_notice"
+      }
+    },
+    {
+      "announcement_type": "general_assembly",
+      "notification_title": "BarangayBoard: General Assembly",
+      "notification_body": "A general assembly announcement was posted. Open the app to read.",
+      "optional_data": {
+        "type": "general_assembly"
+      }
+    },
+    {
+      "announcement_type": "waste_management",
+      "notification_title": "BarangayBoard: Waste Management",
+      "notification_body": "A waste management advisory was posted. Open the app to read.",
+      "optional_data": {
+        "type": "waste_management"
+      }
+    },
+    {
+      "announcement_type": "event",
+      "notification_title": "BarangayBoard: Event",
+      "notification_body": "A new barangay event was announced. Open the app to read.",
+      "optional_data": {
+        "type": "event"
+      }
+    },
+    {
+      "announcement_type": "custom_tag",
+      "notification_title": "BarangayBoard: Announcement",
+      "notification_body": "A new announcement was posted. Open the app to read.",
+      "notification_body_note": "Replace the title with BarangayBoard: <your custom tag> when sending.",
+      "optional_data": {
+        "type": "custom_tag"
+      }
+    }
+  ],
+  "test_message": {
+    "notification_title": "BarangayBoard: Test",
+    "notification_body": "This is a test notification for residents.",
+    "topic": "all_residents"
+  }
+}

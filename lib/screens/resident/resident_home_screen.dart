@@ -41,14 +41,8 @@ class _ResidentHomeScreenState extends State<ResidentHomeScreen> {
   }
 
   void _onForegroundMessage(RemoteMessage message) {
-    final title = message.notification?.title ?? AppStrings.of(context).appName;
-    final body = message.notification?.body ?? '';
-    if (body.isNotEmpty) {
-      MessagingService.instance.showResidentForegroundAnnouncement(
-        title: title,
-        body: body,
-      );
-    }
+    // Firebase Console notifications while the bulletin screen is open.
+    MessagingService.instance.displayRemoteMessage(message);
   }
 
   void _trackNewAnnouncements(List<AnnouncementModel> list) {

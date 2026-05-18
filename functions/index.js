@@ -1,3 +1,7 @@
+// OPTIONAL: auto-send FCM when an announcement is created (requires Blaze + deploy).
+// If you use Firebase Console → Cloud Messaging instead, you do not need to deploy this.
+// See firebase/FCM_CONSOLE_GUIDE.md and firebase/messaging/notification_templates.json.
+
 const { onDocumentCreated } = require('firebase-functions/v2/firestore');
 const { initializeApp } = require('firebase-admin/app');
 const { getMessaging } = require('firebase-admin/messaging');
