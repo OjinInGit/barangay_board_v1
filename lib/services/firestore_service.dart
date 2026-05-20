@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../core/app_constants.dart';
 import '../models/announcement.dart';
-import '../models/announcement_type.dart';
 import '../models/app_models.dart';
 
 class FirestoreService {
@@ -169,38 +169,79 @@ class FirestoreService {
     }
   }
 
-  Stream<List<AnnouncementModel>> announcementsStream() {
-    return _announcements.orderBy('createdAt', descending: true).snapshots().map(
-      (snap) {
-        final list =
-            snap.docs.map(AnnouncementModel.fromDoc).toList(growable: true);
-        list.sort(compareAnnouncementsBySeverity);
-        return list;
+  /// Marks announcements older than [AppConstants.archiveAfterDays] as archived.
+  Future<void> runAutoArchive() async {
+    final cutoff = DateTime.now().subtract(
+      Duration(days: AppConstants.archiveAfterDays),
+    );
+    final snap = await _announcements
+        .orderBy('createdAt', descending: true)
+        .limit(300)
+        .get();
+    final batch = _db.batch();
+    var count = 0;
+    for (final doc in snap.docs) {
+      final data = doc.data();
+      if (data['archived'] == true) continue;
+      final created = (data['createdAt'] as Timestamp?)?.toDate();
+      if (created != null && created.isBefore(cutoff)) {
+        batch.update(doc.reference, {
+          'archived': true,
+          'archivedAt': FieldValue.serverTimestamp(),
+        });
+        count++;
+        if (count >= 400) break;
+      }
+    }
+    if (count > 0) await batch.commit();
+  }
+
+  Stream<List<AnnouncementModel>> _allAnnouncementsStream() {
+    return _announcements.orderBy('createdAt', descending: true).snapshots().asyncMap(
+      (snap) async {
+        await runAutoArchive();
+        return snap.docs.map(AnnouncementModel.fromDoc).toList();
       },
     );
   }
 
-  Stream<List<AnnouncementModel>> announcementsForResident() {
-    final cutoff = DateTime.now().subtract(const Duration(days: 30));
-    return announcementsStream().map(
-      (list) => list.where((a) => a.createdAt.isAfter(cutoff)).toList(),
-    );
+  Stream<List<AnnouncementModel>> announcementsStream() {
+    return _allAnnouncementsStream().map((list) {
+      final active = list.where((a) => !a.archived).toList(growable: true);
+      active.sort(compareAnnouncementsBySeverity);
+      return active;
+    });
   }
 
-  Future<void> createAnnouncement(AnnouncementModel model) async {
+  Stream<List<AnnouncementModel>> announcementsArchivedStream() {
+    return _allAnnouncementsStream().map((list) {
+      final archived = list.where((a) => a.archived).toList(growable: true);
+      archived.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+      return archived;
+    });
+  }
+
+  Stream<List<AnnouncementModel>> announcementsForResident() {
+    return announcementsStream();
+  }
+
+  Future<String> createAnnouncement(AnnouncementModel model) async {
     final uid = _auth.currentUser?.uid;
     if (uid == null) throw StateError('Not signed in');
-    await _announcements.add(model.toMap(uid));
+    final ref = await _announcements.add(model.toMap(uid));
+    return ref.id;
   }
 
   Future<void> updateAnnouncement(AnnouncementModel model) async {
     final uid = _auth.currentUser?.uid;
     if (uid == null) throw StateError('Not signed in');
-    await _announcements.doc(model.id).update({
-      'type': model.type.code,
-      'body': model.body,
-      'customTag':
-          model.type == AnnouncementType.customTag ? model.customTag : null,
+    await _announcements.doc(model.id).update(model.toUpdateMap());
+  }
+
+  Future<void> archiveAnnouncement(String id) async {
+    await _announcements.doc(id).update({
+      'archived': true,
+      'archivedAt': FieldValue.serverTimestamp(),
     });
   }
 

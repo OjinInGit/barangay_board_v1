@@ -8,6 +8,7 @@ import '../../services/firestore_service.dart';
 import '../../widgets/branding_app_bar_title.dart';
 import '../settings/settings_screen.dart';
 import 'announcements_manage_screen.dart';
+import 'archived_announcements_screen.dart';
 import 'create_announcement_screen.dart';
 import 'residents_list_screen.dart';
 
@@ -68,6 +69,15 @@ class AdminHomeScreen extends StatelessWidget {
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute<void>(
                 builder: (_) => const AnnouncementsManageScreen(),
+              ),
+            ),
+          ),
+          _HomeTile(
+            icon: Icons.archive_outlined,
+            label: s.archivedAnnouncements,
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (_) => const ArchivedAnnouncementsScreen(),
               ),
             ),
           ),

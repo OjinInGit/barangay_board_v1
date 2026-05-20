@@ -7,6 +7,7 @@ import '../../models/app_models.dart';
 import '../../services/firestore_service.dart';
 import '../../services/messaging_service.dart';
 import '../../utils/auth_error_message.dart';
+import '../../utils/form_validators.dart';
 import '../../widgets/auth_branded_scaffold.dart';
 import '../admin/admin_home_screen.dart';
 import '../resident/resident_home_screen.dart';
@@ -119,21 +120,32 @@ class _LoginScreenState extends State<LoginScreen> {
     final s = AppStrings.of(context);
     return AuthBrandedScaffold(
       title: s.login,
+      showAppBar: false,
+      centerForm: true,
       child: AbsorbPointer(
         absorbing: _loading,
         child: Form(
           key: _formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(s.login, style: Theme.of(context).textTheme.headlineSmall),
+              Text(
+                s.login,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
               const SizedBox(height: 20),
               TextFormField(
                 controller: _userCtrl,
                 textInputAction: TextInputAction.next,
-                decoration: InputDecoration(labelText: s.username),
-                validator: (v) =>
-                    (v == null || v.trim().isEmpty) ? s.fieldRequired : null,
+                decoration: InputDecoration(
+                  labelText: s.username,
+                  prefixIcon: const Icon(Icons.person_outline),
+                ),
+                validator: (v) => validateRequired(s, v),
               ),
               const SizedBox(height: 12),
               TextFormField(
@@ -141,6 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 obscureText: _obscure,
                 decoration: InputDecoration(
                   labelText: s.password,
+                  prefixIcon: const Icon(Icons.lock_outline),
                   suffixIcon: IconButton(
                     icon: Icon(
                       _obscure ? Icons.visibility : Icons.visibility_off,
@@ -148,6 +161,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () => setState(() => _obscure = !_obscure),
                   ),
                 ),
+                validator: (v) {
+                  if (v == null || v.isEmpty) return s.emptyPassword;
+                  return null;
+                },
               ),
               const SizedBox(height: 24),
               FilledButton(

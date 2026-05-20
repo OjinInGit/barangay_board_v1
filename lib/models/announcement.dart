@@ -10,6 +10,8 @@ class AnnouncementModel {
     required this.createdAt,
     this.customTag,
     this.authorUid,
+    this.archived = false,
+    this.archivedAt,
   });
 
   final String id;
@@ -18,6 +20,8 @@ class AnnouncementModel {
   final DateTime createdAt;
   final String? customTag;
   final String? authorUid;
+  final bool archived;
+  final DateTime? archivedAt;
 
   factory AnnouncementModel.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
     final d = doc.data() ?? {};
@@ -28,6 +32,8 @@ class AnnouncementModel {
       createdAt: (d['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
       customTag: (d['customTag'] ?? d['customLabel']) as String?,
       authorUid: d['authorUid'] as String?,
+      archived: d['archived'] as bool? ?? false,
+      archivedAt: (d['archivedAt'] as Timestamp?)?.toDate(),
     );
   }
 
@@ -35,10 +41,28 @@ class AnnouncementModel {
         'type': type.code,
         'body': body,
         'createdAt': FieldValue.serverTimestamp(),
+        'archived': false,
         if (type == AnnouncementType.customTag && customTag != null)
           'customTag': customTag,
         'authorUid': authorUid,
       };
+
+  Map<String, dynamic> toUpdateMap() => {
+        'type': type.code,
+        'body': body,
+        if (type == AnnouncementType.customTag && customTag != null)
+          'customTag': customTag
+        else
+          'customTag': FieldValue.delete(),
+      };
+
+  String plainBodyPreview() {
+    try {
+      return body.replaceAll(RegExp(r'[\[\]{}"]'), ' ').trim();
+    } catch (_) {
+      return body;
+    }
+  }
 }
 
 int compareAnnouncementsBySeverity(AnnouncementModel a, AnnouncementModel b) {

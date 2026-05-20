@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import '../../l10n/app_strings.dart';
 import '../../services/firestore_service.dart';
 import '../../utils/auth_error_message.dart';
+import '../../utils/form_validators.dart';
 import '../../utils/password_rules.dart';
 import '../../widgets/auth_branded_scaffold.dart';
 
@@ -30,28 +31,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _obscure1 = true;
   bool _obscure2 = true;
 
+  static final _nameInputFormatters = [
+    FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z\s\-\.]')),
+  ];
+
   FirestoreService get _fs =>
       FirestoreService(FirebaseFirestore.instance, FirebaseAuth.instance);
 
   Future<void> _submit() async {
     final s = AppStrings.of(context);
+    if (!_formKey.currentState!.validate()) return;
     if (_pass.text != _retype.text) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(s.errPasswordMismatch)),
       );
       return;
     }
-    if (!_formKey.currentState!.validate()) return;
     setState(() => _loading = true);
     try {
       await _fs.registerResident(
-        email: _email.text,
-        username: _user.text,
+        email: _email.text.trim(),
+        username: _user.text.trim(),
         password: _pass.text,
-        firstName: _first.text,
-        lastName: _last.text,
-        middleInitial: _mi.text,
-        suffix: _suffix.text,
+        firstName: _first.text.trim(),
+        lastName: _last.text.trim(),
+        middleInitial: _mi.text.trim(),
+        suffix: _suffix.text.trim(),
       );
       await FirebaseAuth.instance.signOut();
       if (!mounted) return;
@@ -99,28 +104,44 @@ class _RegisterScreenState extends State<RegisterScreen> {
         absorbing: _loading,
         child: Form(
           key: _formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(s.register, style: Theme.of(context).textTheme.headlineSmall),
+              Text(
+                s.register,
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
               const SizedBox(height: 16),
               TextFormField(
                 controller: _first,
-                decoration: InputDecoration(labelText: s.firstName),
-                validator: (v) =>
-                    (v == null || v.trim().isEmpty) ? s.fieldRequired : null,
+                textCapitalization: TextCapitalization.words,
+                inputFormatters: _nameInputFormatters,
+                decoration: InputDecoration(
+                  labelText: s.firstName,
+                  prefixIcon: const Icon(Icons.badge_outlined),
+                ),
+                validator: (v) => validateNameLetters(s, v),
               ),
               const SizedBox(height: 12),
               TextFormField(
                 controller: _last,
-                decoration: InputDecoration(labelText: s.lastName),
-                validator: (v) =>
-                    (v == null || v.trim().isEmpty) ? s.fieldRequired : null,
+                textCapitalization: TextCapitalization.words,
+                inputFormatters: _nameInputFormatters,
+                decoration: InputDecoration(
+                  labelText: s.lastName,
+                  prefixIcon: const Icon(Icons.badge_outlined),
+                ),
+                validator: (v) => validateNameLetters(s, v),
               ),
               const SizedBox(height: 12),
               TextFormField(
                 controller: _mi,
-                decoration: InputDecoration(labelText: s.middleInitial),
+                decoration: InputDecoration(
+                  labelText: s.middleInitial,
+                  prefixIcon: const Icon(Icons.abc),
+                  helperText: s.middleInitialHint,
+                ),
                 maxLength: 1,
                 buildCounter: (_, {required currentLength, required isFocused, maxLength}) =>
                     null,
@@ -138,34 +159,48 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     );
                   }
                 },
+                validator: (v) => validateMiddleInitial(s, v),
               ),
               const SizedBox(height: 12),
               TextFormField(
                 controller: _suffix,
-                decoration: InputDecoration(labelText: s.suffix),
+                textCapitalization: TextCapitalization.words,
+                inputFormatters: _nameInputFormatters,
+                decoration: InputDecoration(
+                  labelText: s.suffix,
+                  prefixIcon: const Icon(Icons.short_text),
+                ),
+                validator: (v) => validateSuffix(s, v),
               ),
               const SizedBox(height: 12),
               TextFormField(
                 controller: _user,
-                decoration: InputDecoration(labelText: s.username),
-                validator: (v) =>
-                    (v == null || v.trim().isEmpty) ? s.fieldRequired : null,
+                decoration: InputDecoration(
+                  labelText: s.username,
+                  prefixIcon: const Icon(Icons.alternate_email),
+                ),
+                validator: (v) => validateUsername(s, v),
               ),
               const SizedBox(height: 12),
               TextFormField(
                 controller: _email,
                 keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(labelText: s.email),
-                validator: (v) =>
-                    (v == null || v.trim().isEmpty) ? s.fieldRequired : null,
+                autocorrect: false,
+                decoration: InputDecoration(
+                  labelText: s.email,
+                  prefixIcon: const Icon(Icons.email_outlined),
+                  helperText: s.emailFormatHint,
+                ),
+                validator: (v) => validateEmailFormat(s, v),
               ),
               const SizedBox(height: 12),
               TextFormField(
                 controller: _pass,
                 obscureText: _obscure1,
-                enableInteractiveSelection: true,
                 decoration: InputDecoration(
                   labelText: s.password,
+                  prefixIcon: const Icon(Icons.lock_outline),
+                  helperText: s.passwordRequirementsHint,
                   suffixIcon: IconButton(
                     icon: Icon(_obscure1 ? Icons.visibility : Icons.visibility_off),
                     onPressed: () => setState(() => _obscure1 = !_obscure1),
@@ -180,6 +215,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 enableInteractiveSelection: false,
                 decoration: InputDecoration(
                   labelText: s.retypePassword,
+                  prefixIcon: const Icon(Icons.lock_reset),
                   suffixIcon: IconButton(
                     icon: Icon(_obscure2 ? Icons.visibility : Icons.visibility_off),
                     onPressed: () => setState(() => _obscure2 = !_obscure2),

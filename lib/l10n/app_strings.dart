@@ -137,6 +137,53 @@ class AppStrings {
   String get errUsernameTaken => usernameTaken;
   String get errRegistrationServer => errFirestorePermission;
   String get invalidMiddleInitial => errMiddleInitialOneLetter;
+  String get errNameLettersOnly => t(
+        'Name fields must contain letters only.',
+        'Mga titik lamang ang pinapayagan sa pangalan.',
+      );
+  String get errInvalidEmailFormat => t(
+        'Enter a valid email (e.g. name@email.com).',
+        'Maglagay ng wastong email (hal. pangalan@email.com).',
+      );
+  String get emailFormatHint => t(
+        'Example: yourname@gmail.com',
+        'Halimbawa: pangalan@gmail.com',
+      );
+  String get middleInitialHint =>
+      t('One uppercase letter (optional)', 'Isang malaking titik (opsyonal)');
+  String get errUsernameTooShort => t(
+        'Username must be at least 3 characters.',
+        'Ang username ay hindi bababa sa 3 character.',
+      );
+  String get errUsernameInvalid => t(
+        'Username may use letters, numbers, and underscore only.',
+        'Letters, numero, at underscore lamang sa username.',
+      );
+  String get passwordRequirementsHint => t(
+        'Min. 8 characters with upper, lower, number, and symbol.',
+        'Min. 8 character na may malaki, maliit, numero, at simbolo.',
+      );
+
+  String get archivedAnnouncements =>
+      t('Archived Announcements', 'Mga Naka-archive na Anunsyo');
+  String get archive => t('Archive', 'I-archive');
+  String get archiveAnnouncementConfirm => t(
+        'Move this announcement to the archive? It will be hidden from residents after 30 days.',
+        'Ilipat sa archive ang anunsyong ito?',
+      );
+  String get noArchivedAnnouncements => t(
+        'No archived announcements.',
+        'Walang naka-archive na anunsyo.',
+      );
+  String get share => t('Share', 'Ibahagi');
+  String get shareAsText => t('Share as text', 'Ibahagi bilang teksto');
+  String get shareAsPdf => t('Save / share as PDF', 'I-save / ibahagi bilang PDF');
+  String get shareFailed => t(
+        'Could not open share. Try again or use another share option.',
+        'Hindi mabuksan ang pagbabahagi. Subukan muli.',
+      );
+  String get expand => t('Show details', 'Ipakita ang detalye');
+  String get collapse => t('Hide details', 'Itago ang detalye');
   String get invalidCredentials =>
       t('Invalid username or password.', 'Mali ang username o password.');
   String get usernameTaken =>

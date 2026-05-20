@@ -146,7 +146,9 @@ class _ResidentHomeScreenState extends State<ResidentHomeScreen> {
                                       '${dateFmt.format(a.createdAt)}    ${timeFmt.format(a.createdAt)}',
                                     ),
                                     const SizedBox(height: 16),
-                                    AnnouncementBodyView(body: a.body),
+                                    AnnouncementBodyView(
+                                      body: a.body,
+                                    ),
                                   ],
                                 ),
                               ),

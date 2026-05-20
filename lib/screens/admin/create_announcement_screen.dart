@@ -95,11 +95,13 @@ class _CreateAnnouncementScreenState extends State<CreateAnnouncementScreen> {
             ? _customTagCtrl.text.trim()
             : null,
       );
+
       if (widget.existing == null) {
         await _fs.createAnnouncement(model);
       } else {
         await _fs.updateAnnouncement(model);
       }
+
       if (!mounted) return;
       Navigator.pop(context);
     } catch (_) {
@@ -137,7 +139,7 @@ class _CreateAnnouncementScreenState extends State<CreateAnnouncementScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
             child: Text(
               s.announcementType,
               style: Theme.of(context).textTheme.titleSmall,
@@ -194,8 +196,6 @@ class _CreateAnnouncementScreenState extends State<CreateAnnouncementScreen> {
   }
 }
 
-/// Toolbar must have a fixed height in a [Column]; default multi-row [Wrap]
-/// grows without bounds and causes overflow.
 class _BoundedQuillToolbar extends StatelessWidget {
   const _BoundedQuillToolbar({required this.controller});
 
@@ -209,9 +209,7 @@ class _BoundedQuillToolbar extends StatelessWidget {
         height: kDefaultToolbarSize,
         child: QuillSimpleToolbar(
           controller: controller,
-          config: const QuillSimpleToolbarConfig(
-            multiRowsDisplay: false,
-          ),
+          config: const QuillSimpleToolbarConfig(multiRowsDisplay: false),
         ),
       ),
     );
